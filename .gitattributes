@@ -1,2 +1,2 @@
 # Auto detect text files and perform LF normalization
-*.sql linguist-language=SQL
+*.sql linguist-detectable=true
