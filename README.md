@@ -7,10 +7,10 @@ Repositório criado para auxiliar no download e utilização da base de dados de
 Postgres 15 versão
 
 # Como usar
-1 - Faça o download dos arquivos na página dos Dados Abertos https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/dados-abertos/cadastros
-2 - Crie a base de dados e as tabelas através do arquivo Criação_das_Tabelas.sql
-3 - Utilize o arquivo Empresas_Brasil.sql para selecionar as empresas ativas do Brasil
-4 - Através do arquivo Empresas_Florianópolis.sql e Geolocalizacao_Florianopolis.csv crie e selecione as empresas ativas da cidade de Florianópolis com latitude e longitude
+- Faça o download dos arquivos na página dos Dados Abertos https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/dados-abertos/cadastros
+- Crie a base de dados e as tabelas através do arquivo Criação_das_Tabelas.sql
+- Utilize o arquivo Empresas_Brasil.sql para selecionar as empresas ativas do Brasil
+- Através do arquivo Empresas_Florianópolis.sql e Geolocalizacao_Florianopolis.csv crie e selecione as empresas ativas da cidade de Florianópolis com latitude e longitude
 
 # Problemas
 É comum virem um ou dois erros em nos arquivos da Receita Federal, como linhas duplicados ou caracteres inválidos. Nestes casos, a importação informará quais são os erros, podendo ser ajustados e realizar nova importação.
