@@ -93,3 +93,38 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+import pandas as pd
+import csv
+
+# Definir o nome do arquivo CSV
+Empresas0 = 'D:\RF\Empresas0.zip'
+Empresas1 = 'D:\RF\Empresas1.zip'
+Empresas2 = 'D:\RF\Empresas2.zip'
+Empresas3 = 'D:\RF\Empresas3.zip'
+Empresas4 = 'D:\RF\Empresas4.zip'
+Empresas5 = 'D:\RF\Empresas5.zip'
+Empresas6 = 'D:\RF\Empresas6.zip'
+Empresas7 = 'D:\RF\Empresas7.zip'
+Empresas8 = 'D:\RF\Empresas8.zip'
+Empresas9 = 'D:\RF\Empresas9.zip'
+
+# Importar os dados do CSV
+dados_empresas0 = pd.read_csv(Empresas0, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas1 = pd.read_csv(Empresas1, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas2 = pd.read_csv(Empresas2, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas3 = pd.read_csv(Empresas3, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas4 = pd.read_csv(Empresas4, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas5 = pd.read_csv(Empresas5, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas6 = pd.read_csv(Empresas6, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas7 = pd.read_csv(Empresas7, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas8 = pd.read_csv(Empresas8, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+dados_empresas9 = pd.read_csv(Empresas9, sep=';', compression='zip', encoding='latin1', header=None, on_bad_lines='skip', dtype=str)
+
+empresas_concat = pd.concat([dados_empresas0, dados_empresas1, dados_empresas2, dados_empresas3, dados_empresas4, 
+                             dados_empresas5, dados_empresas6, dados_empresas7, dados_empresas8, dados_empresas9])
+dados_concat = empresas_concat[~empresas_concat[0].duplicated(keep='last')]
+dados_concat.to_csv('D:\dados_com_parenteses.csv', index=False, quoting=csv.QUOTE_ALL, quotechar='"')
