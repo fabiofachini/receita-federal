@@ -70,11 +70,13 @@ def download_and_extract(url):
             print(f"Progresso de {filename}: {int(percent)}%, Taxa: {download_speed:.2f} KB/s")
     
     print()  # Pula uma linha para limpar a linha de progresso
-    print(f"Descompactando {filename}...")
-    with zipfile.ZipFile(file_path, "r") as zip_ref:
-        zip_ref.extractall(output_dir)
     
-    print(f"{filename} foi baixado e descompactado com sucesso.")
+    # Descompactar os arquivos
+    #print(f"Descompactando {filename}...")
+    #with zipfile.ZipFile(file_path, "r") as zip_ref:
+        #zip_ref.extractall(output_dir)
+    
+    print(f"{filename} foi baixado com sucesso.")
 
 def main():
     if not os.path.exists(output_dir):
