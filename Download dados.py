@@ -56,7 +56,7 @@ def download_and_extract(url):
     response = requests.get(url, stream=True, timeout=240)
     
     total_size = int(response.headers.get("content-length", 0))
-    block_size = 512000
+    block_size = 1024000
     downloaded = 0
     start_time = time.time()
     
