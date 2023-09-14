@@ -1,8 +1,11 @@
+import pandas as pd
+import csv
 import os
 import requests
 import zipfile
 import concurrent.futures
 import time
+import shutil
 
 # Criar pastas
 os.mkdir('D:/RF/TEMP')
@@ -96,11 +99,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+print('Arquivos baixados.')
+
 
 #AJUTE DOS ARQUIVOS PARA IMPORTAÇÃO
-import pandas as pd
-import csv
-
 #ARQUIVOS EMPRESAS
 # Lista de caminhos dos arquivos
 arquivos = ['D:/RF/TEMP/Empresas0.zip', 'D:/RF/TEMP/Empresas1.zip', 'D:/RF/TEMP/Empresas2.zip', 'D:/RF/TEMP/Empresas3.zip', 'D:/RF/TEMP/Empresas4.zip',
@@ -121,7 +123,7 @@ for arquivo in arquivos:
 dados_empresas = pd.concat(dados_empresas)
 
 dados_empresas.to_csv('D:/RF/empresas.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-
+print('Arquivo Empresas ajustado.')
 
 #ARQUIVOS ESTABELECIMENTOS
 # Lista de caminhos dos arquivos
@@ -141,7 +143,7 @@ for arquivo in arquivos:
 dados_estabelecimentos = pd.concat(dados_estabelecimentos)
 
 dados_estabelecimentos.to_csv('D:/estabelecimentos.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-
+print('Arquivo Estabelecimentos ajustado.')
 
 #ARQUIVOS SOCIOS
 # Lista de caminhos dos arquivos
@@ -161,6 +163,7 @@ for arquivo in arquivos:
 dados_socios = pd.concat(dados_socios)
 
 dados_socios.to_csv('D:/socios.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Socios ajustado.')
 
 #ARQUIVOS SIMPLES
 Simples = 'D:/RF/TEMP/Simples.zip'
@@ -174,7 +177,7 @@ with open('D:/simples.csv', mode='w', encoding='utf-8', newline='') as file:
     # Itere sobre os chunks e escreva cada chunk no arquivo CSV
     for chunk in dados_simples:
         chunk.to_csv(file, index=False, header=False, encoding='utf-8', quoting=csv.QUOTE_NONE, quotechar='')
-
+print('Arquivo Simples ajustado.')
 
 #OUTROS ARQUIVOS
 Cnaes = 'D:/RF/TEMP/Cnaes.zip'
@@ -197,3 +200,8 @@ dados_municipios.to_csv('D:/municipios.csv', encoding='utf-8', errors='ignore', 
 dados_natureza.to_csv('D:/natureza.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
 dados_paises.to_csv('D:/paises.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
 dados_qualificacoes.to_csv('D:/qualificacoes.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Demais arquivos ajustados.')
+
+shutil.rmtree('D:/RF/TEMP')
+
+print('Arquivos prontos para importação no banco de dados.')
