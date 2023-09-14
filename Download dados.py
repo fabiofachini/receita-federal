@@ -5,7 +5,7 @@ import concurrent.futures
 import time
 
 # Criar pastas
-os.mkdir('D:/RF/TEMP)
+os.mkdir('D:/RF/TEMP')
 
 # Links para os arquivos ZIP
 zip_links = [
