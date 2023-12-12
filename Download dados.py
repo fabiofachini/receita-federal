@@ -142,7 +142,7 @@ for arquivo in arquivos:
 # Concatenar todos os DataFrames em um único DataFrame
 dados_estabelecimentos = pd.concat(dados_estabelecimentos)
 
-dados_estabelecimentos.to_csv('D:/estabelecimentos.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_estabelecimentos.to_csv('D:/RF/estabelecimentos.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
 print('Arquivo Estabelecimentos ajustado.')
 
 #ARQUIVOS SOCIOS
@@ -162,7 +162,7 @@ for arquivo in arquivos:
 # Concatenar todos os DataFrames em um único DataFrame
 dados_socios = pd.concat(dados_socios)
 
-dados_socios.to_csv('D:/socios.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_socios.to_csv('D:/RF/socios.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
 print('Arquivo Socios ajustado.')
 
 #ARQUIVOS SIMPLES
@@ -170,7 +170,7 @@ Simples = 'D:/RF/TEMP/Simples.zip'
 dados_simples = pd.read_csv(Simples, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
 # Abra o arquivo CSV de saída em modo de escrita
-with open('D:/simples.csv', mode='w', encoding='utf-8', newline='') as file:
+with open('D:/RF/simples.csv', mode='w', encoding='utf-8', newline='') as file:
     # Crie um escritor CSV
     csv_writer = csv.writer(file, quoting=csv.QUOTE_ALL, quotechar='"')
 
@@ -194,12 +194,12 @@ dados_natureza = pd.read_csv(Natureza, sep=';', compression='zip', encoding='lat
 dados_paises = pd.read_csv(Paises, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
 dados_qualificacoes = pd.read_csv(Qualificacoes, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
 
-dados_cnaes.to_csv('D:/cnaes.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_motivos.to_csv('D:/motivos.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_municipios.to_csv('D:/municipios.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_natureza.to_csv('D:/natureza.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_paises.to_csv('D:/paises.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_qualificacoes.to_csv('D:/qualificacoes.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_cnaes.to_csv('D:/RF/cnaes.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_motivos.to_csv('D:/RF/motivos.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_municipios.to_csv('D:/RF/municipios.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_natureza.to_csv('D:/RF/natureza.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_paises.to_csv('D:/RF/paises.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_qualificacoes.to_csv('D:/RF/qualificacoes.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
 print('Demais arquivos ajustados.')
 
 shutil.rmtree('D:/RF/TEMP')
