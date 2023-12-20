@@ -121,6 +121,7 @@ for arquivo in arquivos:
 
 # Concatenar todos os DataFrames em um único DataFrame
 dados_empresas = pd.concat(dados_empresas)
+dados_empresas = dados_empresas[dados_empresas[1] != ''].drop_duplicates(subset=0, keep='first')
 
 dados_empresas.to_csv('D:/RF/empresas.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
 print('Arquivo Empresas ajustado.')
