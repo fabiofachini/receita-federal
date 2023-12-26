@@ -8,6 +8,7 @@ import time
 import shutil
 
 # Criar pastas
+os.mkdir('D:/RF')
 os.mkdir('D:/RF/TEMP')
 
 # Links para os arquivos ZIP
