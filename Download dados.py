@@ -8,8 +8,11 @@ import time
 import shutil
 
 # Criar pastas
-os.mkdir('D:/RF')
-os.mkdir('D:/RF/TEMP')
+diretorio = 'D:'
+
+# Tentar criar os diretórios
+os.makedirs(os.path.join(diretorio, 'RF'), exist_ok=True)
+os.makedirs(os.path.join(diretorio, 'RF', 'TEMP'), exist_ok=True)
 
 # Links para os arquivos ZIP
 zip_links = [
