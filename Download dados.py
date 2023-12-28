@@ -8,11 +8,11 @@ import time
 import shutil
 
 # Criar pastas
-diretorio = 'D:'
+diretorio = 'D:\\'
 
 # Tentar criar os diretórios
 os.makedirs(os.path.join(diretorio, 'RF'), exist_ok=True)
-os.makedirs(os.path.join(diretorio, 'RF', 'TEMP'), exist_ok=True)
+os.makedirs(os.path.join(diretorio, 'RF', 'temp'), exist_ok=True)
 
 # Links para os arquivos ZIP
 zip_links = [
@@ -109,8 +109,7 @@ print('Arquivos baixados.')
 #AJUTE DOS ARQUIVOS PARA IMPORTAÇÃO
 #ARQUIVOS EMPRESAS
 # Lista de caminhos dos arquivos
-arquivos = ['D:/RF/TEMP/Empresas0.zip', 'D:/RF/TEMP/Empresas1.zip', 'D:/RF/TEMP/Empresas2.zip', 'D:/RF/TEMP/Empresas3.zip', 'D:/RF/TEMP/Empresas4.zip',
-            'D:/RF/TEMP/Empresas5.zip', 'D:/RF/TEMP/Empresas6.zip', 'D:/RF/TEMP/Empresas7.zip', 'D:/RF/TEMP/Empresas8.zip', 'D:/RF/TEMP/Empresas9.zip']
+arquivos = [os.path.join(output_dir, f'Empresas{i}.zip') for i in range(10)]
 
 # Lista para armazenar os DataFrames de cada arquivo
 dados_empresas = []
