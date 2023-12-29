@@ -8,11 +8,20 @@ import time
 import shutil
 
 # Criar pastas
-diretorio = 'D:\\'
+diretorio_base = 'C:/Users/analista.mercado/Downloads'
 
 # Tentar criar os diretórios
-os.makedirs(os.path.join(diretorio, 'RF'), exist_ok=True)
-os.makedirs(os.path.join(diretorio, 'RF', 'temp'), exist_ok=True)
+def criar_pastas(diretorio_das_pastas):
+    os.makedirs(os.path.join(diretorio_das_pastas, 'RF'), exist_ok=True)
+    os.makedirs(os.path.join(diretorio_das_pastas, 'RF', 'temp'), exist_ok=True)
+
+criar_pastas(diretorio_base)
+
+# Diretório onde os arquivos serão baixados
+diretorio_temp = os.path.join(diretorio_base, 'RF', 'temp')
+
+# Diretório onde os arquivos serão ajustados
+diretorio_RF = os.path.join(diretorio_base, 'RF')
 
 # Links para os arquivos ZIP
 zip_links = [
@@ -55,45 +64,36 @@ zip_links = [
     "http://200.152.38.155/CNPJ/Socios9.zip"
 ]
 
-# Diretório onde os arquivos serão baixados e descompactados
-output_dir = "D:/RF/TEMP"
+# Função para organizar o download dos arquivos
+def baixar_extrair(url):
+    nome_arquivos = url.split("/")[-1]
+    diretorio_arquivos = os.path.join(diretorio_temp, nome_arquivos)
+    
+    print(f"Baixando {nome_arquivos}...")
+    resposta = requests.get(url, stream=True, timeout=240)
+    
+    tamanho_total = int(resposta.headers.get("content-length", 0))
+    tamanho_bloco = 4096000
+    total_baixado = 0
+    tempo_inicio = time.time()
+    
+    with open(diretorio_arquivos, "wb") as f:
+        for dados in resposta.iter_content(tamanho_bloco):
+            f.write(dados)
+            total_baixado += len(dados)
+            percentual = (total_baixado / tamanho_total) * 100
+            tempo_decorrido = time.time() - tempo_inicio
+            velocidade_download = total_baixado / (tempo_decorrido * 1024)  # Em KB/s
+            print(f"Progresso de {nome_arquivos}: {int(percentual)}%, Taxa: {velocidade_download:.2f} KB/s")
+    
+    print()
+    print(f"{nome_arquivos} foi baixado com sucesso.")
 
-def download_and_extract(url):
-    filename = url.split("/")[-1]
-    file_path = os.path.join(output_dir, filename)
-    
-    print(f"Baixando {filename}...")
-    response = requests.get(url, stream=True, timeout=240)
-    
-    total_size = int(response.headers.get("content-length", 0))
-    block_size = 4096000
-    downloaded = 0
-    start_time = time.time()
-    
-    with open(file_path, "wb") as f:
-        for data in response.iter_content(block_size):
-            f.write(data)
-            downloaded += len(data)
-            percent = (downloaded / total_size) * 100
-            elapsed_time = time.time() - start_time
-            download_speed = downloaded / (elapsed_time * 1024)  # Em KB/s
-            print(f"Progresso de {filename}: {int(percent)}%, Taxa: {download_speed:.2f} KB/s")
-    
-    print()  # Pula uma linha para limpar a linha de progresso
-    
-    # Descompactar os arquivos
-    #print(f"Descompactando {filename}...")
-    #with zipfile.ZipFile(file_path, "r") as zip_ref:
-        #zip_ref.extractall(output_dir)
-    
-    print(f"{filename} foi baixado com sucesso.")
-
-def main():
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+# Função para executar o download e torná-los simultâneos
+def executar_download():
     
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(zip_links)) as executor:
-        futures = [executor.submit(download_and_extract, link) for link in zip_links]
+        futures = [executor.submit(baixar_extrair, link) for link in zip_links]
         
         for future in concurrent.futures.as_completed(futures):
             try:
@@ -101,73 +101,92 @@ def main():
             except Exception as e:
                 print(f"Ocorreu um erro: {e}")
 
-if __name__ == "__main__":
-    main()
+executar_download()
 print('Arquivos baixados.')
 
 
-#AJUTE DOS ARQUIVOS PARA IMPORTAÇÃO
-#ARQUIVOS EMPRESAS
+# Corrigir erros dos arquivos e o encoding
+print('Iniciando ajustes dos arquivos para importação no banco de dados')
+
+# Arquivo Empresas
+print('Iniciando ajustes no arquivo Empresas.')
+
 # Lista de caminhos dos arquivos
-arquivos = [os.path.join(output_dir, f'Empresas{i}.zip') for i in range(10)]
+arquivos_empresas = [os.path.join(diretorio_temp, f'Empresas{i}.zip') for i in range(10)]
 
 # Lista para armazenar os DataFrames de cada arquivo
 dados_empresas = []
 
 # Loop através dos arquivos e processamento em chunks
-for arquivo in arquivos:
+for arquivo in arquivos_empresas:
     chunks = pd.read_csv(arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
     for chunk in chunks:
-        # Remover linhas inválidas
-        chunk = chunk[chunk[1] != '']
         dados_empresas.append(chunk)
 
-# Concatenar todos os DataFrames em um único DataFrame
+print('Importação Empresas concluída. Iniciando criação do Dataframe.')
+
+# Concatenar em um único DataFrame
 dados_empresas = pd.concat(dados_empresas)
+print('Dataframe Empresas criado. Excluíndo dados duplicados e ausentes.')
+
+# Excluir linhas inválidas e duplicadas
 dados_empresas = dados_empresas[dados_empresas[1] != ''].drop_duplicates(subset=0, keep='first')
+print('Dados das Empresas excluídos. Iniciando exportação para CSV.')
 
-dados_empresas.to_csv('D:/RF/empresas.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-print('Arquivo Empresas ajustado.')
+# Exportar CSV Empresas
+dados_empresas.to_csv(os.path.join(diretorio_RF, 'empresas.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Empresas exportado.')
 
-#ARQUIVOS ESTABELECIMENTOS
+
+# Arquivo Estabelecimentos
+print('Iniciando ajustes no arquivo Estabelecimentos.')
+
 # Lista de caminhos dos arquivos
-arquivos = ['D:/RF/TEMP/Estabelecimentos0.zip', 'D:/RF/TEMP/Estabelecimentos1.zip', 'D:/RF/TEMP/Estabelecimentos2.zip', 'D:/RF/TEMP/Estabelecimentos3.zip', 'D:/RF/TEMP/Estabelecimentos4.zip',
-            'D:/RF/TEMP/Estabelecimentos5.zip', 'D:/RF/TEMP/Estabelecimentos6.zip', 'D:/RF/TEMP/Estabelecimentos7.zip', 'D:/RF/TEMP/Estabelecimentos8.zip', 'D:/RF/TEMP/Estabelecimentos9.zip']
+arquivos_estabelecimentos = [os.path.join(diretorio_temp, f'Estabelecimentos{i}.zip') for i in range(10)]
 
 # Lista para armazenar os DataFrames de cada arquivo
 dados_estabelecimentos = []
 
 # Loop através dos arquivos e processamento em chunks
-for arquivo in arquivos:
-    chunks = pd.read_csv(arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=200)
+for arquivo in arquivos_estabelecimentos:
+    chunks = pd.read_csv(arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
     for chunk in chunks:
-        dados_estabelecimentos.append(chunk)
+        dados_empresas.append(chunk)
 
-# Concatenar todos os DataFrames em um único DataFrame
+print('Importação Estabelecimentos concluída. Iniciando criação do Dataframe.')
+
+# Concatenar em um único DataFrame
 dados_estabelecimentos = pd.concat(dados_estabelecimentos)
+print('Dataframe Estabelecimentos criado. Iniciando exportação para CSV.')
 
-dados_estabelecimentos.to_csv('D:/RF/estabelecimentos.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-print('Arquivo Estabelecimentos ajustado.')
+# Exportar CSV Estabelecimentos
+dados_estabelecimentos.to_csv(os.path.join(diretorio_RF, 'empresas.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Estabelecimentos exportado.')
 
-#ARQUIVOS SOCIOS
+# Arquivo Sócios
+print('Iniciando ajustes no arquivo Sócios.')
+
 # Lista de caminhos dos arquivos
-arquivos = ['D:/RF/TEMP/Socios0.zip', 'D:/RF/TEMP/Socios1.zip', 'D:/RF/TEMP/Socios2.zip', 'D:/RF/TEMP/Socios3.zip', 'D:/RF/TEMP/Socios4.zip',
-            'D:/RF/TEMP/Socios5.zip', 'D:/RF/TEMP/Socios6.zip', 'D:/RF/TEMP/Socios7.zip', 'D:/RF/TEMP/Socios8.zip', 'D:/RF/TEMP/Socios9.zip']
+arquivos_socios = [os.path.join(diretorio_temp, f'Socios{i}.zip') for i in range(10)]
 
 # Lista para armazenar os DataFrames de cada arquivo
 dados_socios = []
 
 # Loop através dos arquivos e processamento em chunks
-for arquivo in arquivos:
+for arquivo in arquivos_socios:
     chunks = pd.read_csv(arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
     for chunk in chunks:
-        dados_socios.append(chunk)
+        dados_empresas.append(chunk)
 
-# Concatenar todos os DataFrames em um único DataFrame
+print('Importação Sócios concluída. Iniciando criação do Dataframe.')
+
+# Concatenar em um único DataFrame
 dados_socios = pd.concat(dados_socios)
+print('Dataframe Sócios criado. Iniciando exportação para CSV.')
 
-dados_socios.to_csv('D:/RF/socios.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-print('Arquivo Socios ajustado.')
+# Exportar CSV Sócios
+dados_socios.to_csv(os.path.join(diretorio_RF, 'empresas.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Sócios exportado.')
 
 #ARQUIVOS SIMPLES
 Simples = 'D:/RF/TEMP/Simples.zip'
