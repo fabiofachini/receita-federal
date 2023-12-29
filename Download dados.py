@@ -151,7 +151,7 @@ dados_estabelecimentos = []
 for arquivo in arquivos_estabelecimentos:
     chunks = pd.read_csv(arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
     for chunk in chunks:
-        dados_empresas.append(chunk)
+        dados_estabelecimentos.append(chunk)
 
 print('Importação Estabelecimentos concluída. Iniciando criação do Dataframe.')
 
@@ -176,7 +176,7 @@ dados_socios = []
 for arquivo in arquivos_socios:
     chunks = pd.read_csv(arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
     for chunk in chunks:
-        dados_empresas.append(chunk)
+        dados_socios.append(chunk)
 
 print('Importação Sócios concluída. Iniciando criação do Dataframe.')
 
