@@ -2,13 +2,12 @@ import pandas as pd
 import csv
 import os
 import requests
-import zipfile
 import concurrent.futures
 import time
 import shutil
 
 # Criar pastas
-diretorio_base = 'C:/Users/analista.mercado/Downloads'
+diretorio_base = 'D:/'
 
 # Tentar criar os diretórios
 def criar_pastas(diretorio_das_pastas):
@@ -104,7 +103,6 @@ def executar_download():
 executar_download()
 print('Arquivos baixados.')
 
-
 # Corrigir erros dos arquivos e o encoding
 print('Iniciando ajustes dos arquivos para importação no banco de dados')
 
@@ -149,7 +147,7 @@ dados_estabelecimentos = []
 
 # Loop através dos arquivos e processamento em chunks
 for arquivo in arquivos_estabelecimentos:
-    chunks = pd.read_csv(arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+    chunks = pd.read_csv(arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=500)
     for chunk in chunks:
         dados_estabelecimentos.append(chunk)
 
@@ -160,7 +158,7 @@ dados_estabelecimentos = pd.concat(dados_estabelecimentos)
 print('Dataframe Estabelecimentos criado. Iniciando exportação para CSV.')
 
 # Exportar CSV Estabelecimentos
-dados_estabelecimentos.to_csv(os.path.join(diretorio_RF, 'empresas.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_estabelecimentos.to_csv(os.path.join(diretorio_RF, 'estabelecimentos.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
 print('Arquivo Estabelecimentos exportado.')
 
 # Arquivo Sócios
@@ -185,46 +183,101 @@ dados_socios = pd.concat(dados_socios)
 print('Dataframe Sócios criado. Iniciando exportação para CSV.')
 
 # Exportar CSV Sócios
-dados_socios.to_csv(os.path.join(diretorio_RF, 'empresas.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_socios.to_csv(os.path.join(diretorio_RF, 'socios.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
 print('Arquivo Sócios exportado.')
 
-#ARQUIVOS SIMPLES
-Simples = 'D:/RF/TEMP/Simples.zip'
-dados_simples = pd.read_csv(Simples, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+# Arquivo Simples
+print('Iniciando ajustes no arquivo Simples.')
 
-# Abra o arquivo CSV de saída em modo de escrita
-with open('D:/RF/simples.csv', mode='w', encoding='utf-8', newline='') as file:
-    # Crie um escritor CSV
-    csv_writer = csv.writer(file, quoting=csv.QUOTE_ALL, quotechar='"')
+dados_simples = pd.read_csv(os.path.join(diretorio_temp, 'simples.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
-    # Itere sobre os chunks e escreva cada chunk no arquivo CSV
-    for chunk in dados_simples:
-        chunk.to_csv(file, index=False, header=False, encoding='utf-8', quoting=csv.QUOTE_NONE, quotechar='')
-print('Arquivo Simples ajustado.')
+# Concatenar em um único DataFrame
+dados_simples = pd.concat(dados_simples)
+print('Dataframe Simples criado. Iniciando exportação para CSV.')
 
-#OUTROS ARQUIVOS
-Cnaes = 'D:/RF/TEMP/Cnaes.zip'
-Motivos = 'D:/RF/TEMP/Motivos.zip'
-Municipios = 'D:/RF/TEMP/Municipios.zip'
-Natureza = 'D:/RF/TEMP/Naturezas.zip'
-Paises = 'D:/RF/TEMP/Paises.zip'
-Qualificacoes = 'D:/RF/TEMP/Qualificacoes.zip'
+# Exportar CSV Simples
+dados_simples.to_csv(os.path.join(diretorio_RF, 'simples.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Simples exportado.')
 
-dados_cnaes = pd.read_csv(Cnaes, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
-dados_motivos = pd.read_csv(Motivos, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
-dados_municipios = pd.read_csv(Municipios, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
-dados_natureza = pd.read_csv(Natureza, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
-dados_paises = pd.read_csv(Paises, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
-dados_qualificacoes = pd.read_csv(Qualificacoes, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
+# Arquivo Cnaes
+print('Iniciando ajustes no arquivo Cnaes.')
 
-dados_cnaes.to_csv('D:/RF/cnaes.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_motivos.to_csv('D:/RF/motivos.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_municipios.to_csv('D:/RF/municipios.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_natureza.to_csv('D:/RF/natureza.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_paises.to_csv('D:/RF/paises.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-dados_qualificacoes.to_csv('D:/RF/qualificacoes.csv', encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
-print('Demais arquivos ajustados.')
+dados_cnaes = pd.read_csv(os.path.join(diretorio_temp, 'Cnaes.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
-shutil.rmtree('D:/RF/TEMP')
+# Concatenar em um único DataFrame
+dados_cnaes = pd.concat(dados_cnaes)
+print('Dataframe Cnaes criado. Iniciando exportação para CSV.')
+
+# Exportar CSV Cnaes
+dados_cnaes.to_csv(os.path.join(diretorio_RF, 'cnaes.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Cnaes exportado.')
+
+# Arquivo Motivos
+print('Iniciando ajustes no arquivo Motivos.')
+
+dados_motivos = pd.read_csv(os.path.join(diretorio_temp, 'Motivos.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+
+# Concatenar em um único DataFrame
+dados_motivos = pd.concat(dados_motivos)
+print('Dataframe Motivos criado. Iniciando exportação para CSV.')
+
+# Exportar CSV Motivos
+dados_motivos.to_csv(os.path.join(diretorio_RF, 'motivos.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Motivos exportado.')
+
+# Arquivo Municipios
+print('Iniciando ajustes no arquivo Municipios.')
+
+dados_municipios = pd.read_csv(os.path.join(diretorio_temp, 'Municipios.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+
+# Concatenar em um único DataFrame
+dados_municipios = pd.concat(dados_municipios)
+print('Dataframe Municipios criado. Iniciando exportação para CSV.')
+
+# Exportar CSV Municipios
+dados_municipios.to_csv(os.path.join(diretorio_RF, 'municipios.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Municipios exportado.')
+
+# Arquivo Natureza
+print('Iniciando ajustes no arquivo Natureza.')
+
+dados_natureza = pd.read_csv(os.path.join(diretorio_temp, 'Natureza.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+
+# Concatenar em um único DataFrame
+dados_natureza = pd.concat(dados_natureza)
+print('Dataframe Natureza criado. Iniciando exportação para CSV.')
+
+# Exportar CSV Natureza
+dados_natureza.to_csv(os.path.join(diretorio_RF, 'natureza.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Natureza exportado.')
+
+# Arquivo Paises
+print('Iniciando ajustes no arquivo Paises.')
+
+dados_paises = pd.read_csv(os.path.join(diretorio_temp, 'Paises.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+
+# Concatenar em um único DataFrame
+dados_paises = pd.concat(dados_paises)
+print('Dataframe Paises criado. Iniciando exportação para CSV.')
+
+# Exportar CSV Paises
+dados_paises.to_csv(os.path.join(diretorio_RF, 'paises.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Paises exportado.')
+
+# Arquivo Qualificacoes
+print('Iniciando ajustes no arquivo Qualificacoes.')
+
+dados_qualificacoes = pd.read_csv(os.path.join(diretorio_temp, 'Qualificacoes.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+
+# Concatenar em um único DataFrame
+dados_qualificacoes = pd.concat(dados_qualificacoes)
+print('Dataframe Qualificacoes criado. Iniciando exportação para CSV.')
+
+# Exportar CSV Qualificacoes
+dados_qualificacoes.to_csv(os.path.join(diretorio_RF, 'qualificacoes.csv'), encoding='utf-8', errors='ignore', index=False, header=False, quoting=csv.QUOTE_ALL, quotechar='"')
+print('Arquivo Qualificacoes exportado.')
+
+# Excluir pasta de arquivos temporários
+shutil.rmtree(os.path.join(diretorio_temp)
 
 print('Arquivos prontos para importação no banco de dados.')
