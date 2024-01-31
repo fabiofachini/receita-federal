@@ -1,7 +1,7 @@
 # receita-federal
  
 # Introdução
-Com este repositório, será possível consultar todos os dados das empresas do Brasil disponíveis no site Consulta CNPJ da RECEITA FEDERAL. Alguns exemplos dos dados disponíveis são: Razão Social, Capital Social, Porte, Setor, Cnae, Sócios, Endereço, Telefone, E-mail, entre outros. Além disso, está disponível um script para baixar e corrigir pequenos erros que são encontrados e de ajustar a codificação da base de dados.
+Com este repositório, será possível consultar todos os dados das empresas do Brasil disponíveis no site Consulta CNPJ da RECEITA FEDERAL. Alguns exemplos dos dados disponíveis são: Razão Social, Capital Social, Porte, Setor, Cnae, Sócios, Endereço, Telefone, E-mail, entre outros. Além disso, está disponível um script para baixar e corrigir pequenos erros que são encontrados e ajustar a codificação da base de dados.
 
 # Software
 - Python versão 3
