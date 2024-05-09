@@ -110,7 +110,7 @@ print('Iniciando ajustes dos arquivos para importação no banco de dados')
 
 # ARQUIVO CNAES
 print('Iniciando ajustes no arquivo Cnaes.')
-dados_cnaes = pd.read_csv(os.path.join(diretorio_temp, 'Cnaes.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+dados_cnaes = pd.read_csv(os.path.join(diretorio_temp, 'Cnaes.zip'), sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
 # Concatenar em um único DataFrame
 db_dados_cnaes = pd.concat(dados_cnaes)
@@ -122,7 +122,7 @@ print('Arquivo Cnaes exportado.')
 
 # ARQUIVO MOTIVOS
 print('Iniciando ajustes no arquivo Motivos.')
-dados_motivos = pd.read_csv(os.path.join(diretorio_temp, 'Motivos.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+dados_motivos = pd.read_csv(os.path.join(diretorio_temp, 'Motivos.zip'), sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
 # Concatenar em um único DataFrame
 db_dados_motivos = pd.concat(dados_motivos)
@@ -134,7 +134,7 @@ print('Arquivo Motivos exportado.')
 
 # ARQUIVO MUNICIPIOS
 print('Iniciando ajustes no arquivo Municipios.')
-dados_municipios = pd.read_csv(os.path.join(diretorio_temp, 'Municipios.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+dados_municipios = pd.read_csv(os.path.join(diretorio_temp, 'Municipios.zip'), sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
 # Concatenar em um único DataFrame
 db_dados_municipios = pd.concat(dados_municipios)
@@ -146,7 +146,7 @@ print('Arquivo Municipios exportado.')
 
 # ARQUIVO NATUREZA
 print('Iniciando ajustes no arquivo Natureza.')
-dados_natureza = pd.read_csv(os.path.join(diretorio_temp, 'Natureza.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+dados_natureza = pd.read_csv(os.path.join(diretorio_temp, 'Naturezas.zip'), sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
 # Concatenar em um único DataFrame
 db_dados_natureza = pd.concat(dados_natureza)
@@ -158,7 +158,7 @@ print('Arquivo Natureza exportado.')
 
 # ARQUIVO PAISES
 print('Iniciando ajustes no arquivo Paises.')
-dados_paises = pd.read_csv(os.path.join(diretorio_temp, 'Paises.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+dados_paises = pd.read_csv(os.path.join(diretorio_temp, 'Paises.zip'), sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
 # Concatenar em um único DataFrame
 db_dados_paises = pd.concat(dados_paises)
@@ -170,7 +170,7 @@ print('Arquivo Paises exportado.')
 
 # ARQUIVO QUALIFICACOES
 print('Iniciando ajustes no arquivo Qualificacoes.')
-dados_qualificacoes = pd.read_csv(os.path.join(diretorio_temp, 'Qualificacoes.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+dados_qualificacoes = pd.read_csv(os.path.join(diretorio_temp, 'Qualificacoes.zip'), sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
 # Concatenar em um único DataFrame
 db_dados_qualificacoes = pd.concat(dados_qualificacoes)
@@ -182,7 +182,7 @@ print('Arquivo Qualificacoes exportado.')
 
 # ARQUIVO SIMPLES
 print('Iniciando ajustes no arquivo Simples.')
-dados_simples = pd.read_csv(os.path.join(diretorio_temp, 'simples.zip'),diretorio_temp, sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
+dados_simples = pd.read_csv(os.path.join(diretorio_temp, 'simples.zip'), sep=';', compression='zip', encoding='latin1', header=None, dtype=str, chunksize=1000)
 
 # Concatenar em um único DataFrame
 db_dados_simples = pd.concat(dados_simples)
