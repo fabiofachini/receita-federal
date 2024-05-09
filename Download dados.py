@@ -239,7 +239,7 @@ db_dados_empresas = pd.concat(dados_empresas)
 print('Dataframe Empresas criado. Excluíndo dados duplicados e ausentes.')
 
 # Excluir linhas inválidas e duplicadas
-db_dados_empresas = dados_empresas[dados_empresas[1] != ''].drop_duplicates(subset=0, keep='first')
+db_dados_empresas = db_dados_empresas[db_dados_empresas[1] != ''].drop_duplicates(subset=0, keep='first')
 print('Dados das Empresas excluídos. Iniciando exportação para CSV.')
 
 # Exportar CSV Empresas
