@@ -1,0 +1,37 @@
+# dbt_project.yml
+
+name: 'receita-federal'
+version: '1.0'
+config-version: 2
+
+# Diretório onde os modelos (SQL) serão salvos
+model-paths: ["models/staging", "models/intermediate", "models/marts"]
+
+# Diretório para armazenar arquivos de análise
+analysis-paths: ["analysis"]
+
+# Diretório onde as macros (definições de função) serão salvas
+macro-paths: ["macros"]
+
+# Diretório onde os dados seeds (dados brutos) serão salvos
+seed-paths: ["seeds"]
+
+# Diretório onde os snapshots (instantâneos de dados) serão salvos
+snapshot-paths: ["snapshots"]
+
+# Diretório onde os testes serão salvos
+test-paths: ["tests"]
+
+# Diretório onde os schemas (esquemas de banco de dados) serão salvos
+target-path: "target"
+
+# Diretório onde os arquivos de log serão salvos
+log-path: "logs"
+
+# Especifica a versão mínima do dbt-core necessária para rodar este projeto
+require-dbt-version: [">=1.0.0"]
+
+# Configurações padrão aplicadas a todos os modelos
+models:
+  receita-federal:
+    +materialized: view  # ou table, ephemeral, etc.

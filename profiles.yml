@@ -1,0 +1,9 @@
+# ~/.dbt/profiles.yml
+
+receita-federal:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: './dados.duckdb'
+      extensions: []  # Use para carregar extensões adicionais se necessário

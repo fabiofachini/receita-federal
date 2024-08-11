@@ -8,12 +8,12 @@ def executar_scripts():
         source = os.path.join(os.getcwd())
 
         # Executa api_ibge.py
-        print("Executando api_ibge.py")
+        print("Baixando CSVs da Receita Federal")
         download_csv = os.path.join(source, 'download_csv.py')
         subprocess.run(['python3', download_csv])
 
         # Executa api_bacen.py
-        print("Executando api_bacen.py")
+        print("Importando no Banco de Dados")
         import_db = os.path.join(source, 'import_db.py')
         subprocess.run(['python3', import_db])
 
