@@ -272,6 +272,6 @@ db_dados_estabelecimentos.to_csv(os.path.join(diretorio_RF, 'estabelecimentos.cs
 print('Arquivo Estabelecimentos exportado.')
 
 # Excluir pasta de arquivos temporários
-shutil.rmtree(os.path.join(diretorio_temp)
+shutil.rmtree(os.path.join(diretorio_temp))
 
 print('Arquivos prontos para importação no banco de dados.')
