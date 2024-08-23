@@ -1,0 +1,178 @@
+version: 2
+
+models:
+  - name: cnaes
+    description: "Tabela com os Códigos Nacionais de Atividades Econômicas (CNAEs)"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: motivos
+    description: "Tabela de motivos"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: municipios
+    description: "Tabela de municípios"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: naturezas
+    description: "Tabela de naturezas jurídicas"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: paises
+    description: "Tabela de países"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: qualificacoes
+    description: "Tabela de qualificações"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: empresas0
+    description: "Tabela Empresas (Parte 0)"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: empresas1
+    description: "Tabela Empresas (Parte 1)"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: empresas2
+    description: "Tabela Empresas (Parte 2)"
+
+  - name: empresas3
+    description: "Tabela Empresas (Parte 3)"
+
+  - name: empresas4
+    description: "Tabela Empresas (Parte 4)"
+
+  - name: empresas5
+    description: "Tabela Empresas (Parte 5)"
+
+  - name: empresas6
+    description: "Tabela Empresas (Parte 6)"
+
+  - name: empresas7
+    description: "Tabela Empresas (Parte 7)"
+
+  - name: empresas8
+    description: "Tabela Empresas (Parte 8)"
+
+  - name: empresas9
+    description: "Tabela Empresas (Parte 9)"
+
+  - name: estabelecimentos0
+    description: "Tabela Estabelecimentos (Parte 0)"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: estabelecimentos1
+    description: "Tabela Estabelecimentos (Parte 1)"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: estabelecimentos2
+    description: "Tabela Estabelecimentos (Parte 2)"
+
+  - name: estabelecimentos3
+    description: "Tabela Estabelecimentos (Parte 3)"
+
+  - name: estabelecimentos4
+    description: "Tabela Estabelecimentos (Parte 4)"
+
+  - name: estabelecimentos5
+    description: "Tabela Estabelecimentos (Parte 5)"
+
+  - name: estabelecimentos6
+    description: "Tabela Estabelecimentos (Parte 6)"
+
+  - name: estabelecimentos7
+    description: "Tabela Estabelecimentos (Parte 7)"
+
+  - name: estabelecimentos8
+    description: "Tabela Estabelecimentos (Parte 8)"
+
+  - name: estabelecimentos9
+    description: "Tabela Estabelecimentos (Parte 9)"
+
+  - name: simples
+    description: "Tabela do Simples Nacional"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: socios0
+    description: "Tabela Sócios (Parte 0)"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: socios1
+    description: "Tabela Sócios (Parte 1)"
+    columns:
+      - name: coluna1
+        description: "Descrição da coluna1"
+      - name: coluna2
+        description: "Descrição da coluna2"
+
+  - name: socios2
+    description: "Tabela Sócios (Parte 2)"
+
+  - name: socios3
+    description: "Tabela Sócios (Parte 3)"
+
+  - name: socios4
+    description: "Tabela Sócios (Parte 4)"
+
+  - name: socios5
+    description: "Tabela Sócios (Parte 5)"
+
+  - name: socios6
+    description: "Tabela Sócios (Parte 6)"
+
+  - name: socios7
+    description: "Tabela Sócios (Parte 7)"
+
+  - name: socios8
+    description: "Tabela Sócios (Parte 8)"
+
+  - name: socios9
+    description: "Tabela Sócios (Parte 9)"
