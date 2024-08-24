@@ -1,16 +1,18 @@
--- models/staging/stg_bacen__carteira_de_credito_pf.sql
+-- models/staging/
 
-with carteira_de_credito_pf as (
-    select * from {{ source('dbo', 'carteira_de_credito_pf') }}
+with cnaes as (
+    select * 
+    from {{ source('main', 'src_cnaes') }}
 ),
 
--- transformação dos dados
-stg_bacen__carteira_de_credito_pf as (
+-- Transformação dos dados
+stg_rf__cnaes as (
     select
-        CONVERT(DATE, data, 103) AS Data,
-        cast(valor as int) as Carteira_de_Credito_PF
-    from carteira_de_credito_pf
+        cast("0" as integer) as cnaes_codigo,
+        cast("1" as varchar(200)) as cnaes_descricao
+    from cnaes
 )
 
--- retorno dos dados transformados
-select * from stg_bacen__carteira_de_credito_pf
+-- Retorno dos dados transformados
+select * from stg_rf__cnaes
+

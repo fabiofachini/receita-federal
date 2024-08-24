@@ -5,13 +5,14 @@ import duckdb
 # Corrigir erros dos arquivos e o encoding
 print('Iniciando ajustes dos arquivos para importação no banco de dados')
 
-diretorio = os.path.join(os.getcwd(), 'source')
+diretorio = '/media/fabio/SSD 2/Programação/RF'
+#diretorio = os.path.join(os.getcwd(), 'source')
 con = duckdb.connect('dados.duckdb')
 
 # Definir os nomes dos arquivos e das tabelas
 arquivos_estabelecimentos = [f'Estabelecimentos{i}.zip' for i in range(10)]
 arquivos_socios = [f'Socios{i}.zip' for i in range(10)]
-arquivos_empresas = [f'Empresas{i}.zip' for i in range(7)]
+arquivos_empresas = [f'Empresas{i}.zip' for i in range(10)]
 outros_arquivos = ['Cnaes.zip', 'Motivos.zip', 'Municipios.zip', 'Naturezas.zip', 'Paises.zip', 'Qualificacoes.zip', 'Simples.zip']
 
 # Função para ler e carregar dados no banco de dados

@@ -1,5 +1,3 @@
-# ~/.dbt/profiles.yml
-
 receita-federal:
   target: dev
   outputs:

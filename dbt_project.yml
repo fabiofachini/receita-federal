@@ -1,8 +1,10 @@
 # dbt_project.yml
 
-name: 'receita-federal'
+name: 'receita_federal'
 version: '1.0'
 config-version: 2
+
+profile: receita-federal
 
 # Diretório onde os modelos (SQL) serão salvos
 model-paths: ["models/staging", "models/intermediate", "models/marts"]
@@ -30,8 +32,3 @@ log-path: "logs"
 
 # Especifica a versão mínima do dbt-core necessária para rodar este projeto
 require-dbt-version: [">=1.0.0"]
-
-# Configurações padrão aplicadas a todos os modelos
-models:
-  receita-federal:
-    +materialized: view  # ou table, ephemeral, etc.

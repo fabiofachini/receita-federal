@@ -1,178 +1,354 @@
 version: 2
 
+sources:
+  - name: main
+    tables:
+      - name: src_cnaes
+        description: "Tabela com os Códigos Nacionais de Atividades Econômicas (CNAEs)"
+
+      - name: src_motivos
+        description: "Tabela de motivos"
+
+      - name: src_municipios
+        description: "Tabela de municípios"
+
+      - name: src_naturezas
+        description: "Tabela de naturezas jurídicas"
+
+      - name: src_paises
+        description: "Tabela de países"
+
+      - name: src_qualificacoes
+        description: "Tabela de qualificações"
+
+      - name: src_empresas0
+        description: "Tabela Empresas (Parte 0)"
+
+      - name: src_empresas1
+        description: "Tabela Empresas (Parte 1)"
+
+      - name: src_empresas2
+        description: "Tabela Empresas (Parte 2)"
+
+      - name: src_empresas3
+        description: "Tabela Empresas (Parte 3)"
+
+      - name: src_empresas4
+        description: "Tabela Empresas (Parte 4)"
+
+      - name: src_empresas5
+        description: "Tabela Empresas (Parte 5)"
+
+      - name: src_empresas6
+        description: "Tabela Empresas (Parte 6)"
+
+      - name: src_empresas7
+        description: "Tabela Empresas (Parte 7)"
+
+      - name: src_empresas8
+        description: "Tabela Empresas (Parte 8)"
+
+      - name: src_empresas9
+        description: "Tabela Empresas (Parte 9)"
+
+      - name: src_estabelecimentos0
+        description: "Tabela Estabelecimentos (Parte 0)"
+
+      - name: src_estabelecimentos1
+        description: "Tabela Estabelecimentos (Parte 1)"
+
+      - name: src_estabelecimentos2
+        description: "Tabela Estabelecimentos (Parte 2)"
+
+      - name: src_estabelecimentos3
+        description: "Tabela Estabelecimentos (Parte 3)"
+
+      - name: src_estabelecimentos4
+        description: "Tabela Estabelecimentos (Parte 4)"
+
+      - name: src_estabelecimentos5
+        description: "Tabela Estabelecimentos (Parte 5)"
+
+      - name: src_estabelecimentos6
+        description: "Tabela Estabelecimentos (Parte 6)"
+
+      - name: src_estabelecimentos7
+        description: "Tabela Estabelecimentos (Parte 7)"
+
+      - name: src_estabelecimentos8
+        description: "Tabela Estabelecimentos (Parte 8)"
+
+      - name: src_estabelecimentos9
+        description: "Tabela Estabelecimentos (Parte 9)"
+
+      - name: src_simples
+        description: "Tabela do Simples Nacional"
+
+      - name: src_socios0
+        description: "Tabela Sócios (Parte 0)"
+
+      - name: src_socios1
+        description: "Tabela Sócios (Parte 1)"
+
+      - name: src_socios2
+        description: "Tabela Sócios (Parte 2)"
+
+      - name: src_socios3
+        description: "Tabela Sócios (Parte 3)"
+
+      - name: src_socios4
+        description: "Tabela Sócios (Parte 4)"
+
+      - name: src_socios5
+        description: "Tabela Sócios (Parte 5)"
+
+      - name: src_socios6
+        description: "Tabela Sócios (Parte 6)"
+
+      - name: src_socios7
+        description: "Tabela Sócios (Parte 7)"
+
+      - name: src_socios8
+        description: "Tabela Sócios (Parte 8)"
+
+      - name: src_socios9
+        description: "Tabela Sócios (Parte 9)"
+
 models:
-  - name: cnaes
-    description: "Tabela com os Códigos Nacionais de Atividades Econômicas (CNAEs)"
+  - name: stg_rf__cnaes
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: cnaes_codigo
+        data_tests:
+          - unique
+          - not_null
 
-  - name: motivos
-    description: "Tabela de motivos"
+  - name: stg_rf__motivos
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: motivos_codigo
+        data_tests:
+          - unique
+          - not_null
 
-  - name: municipios
-    description: "Tabela de municípios"
+  - name: stg_rf__municipios
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: municipios_codigo
+        data_tests:
+          - unique
+          - not_null
 
-  - name: naturezas
-    description: "Tabela de naturezas jurídicas"
+  - name: stg_rf__naturezas
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: naturezas_codigo
+        data_tests:
+          - unique
+          - not_null
 
-  - name: paises
-    description: "Tabela de países"
+  - name: stg_rf__paises
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: paises_codigo
+        data_tests:
+          - unique
+          - not_null
 
-  - name: qualificacoes
-    description: "Tabela de qualificações"
+  - name: stg_rf__qualificacoes
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: qualificacoes_codigo
+        data_tests:
+          - unique
+          - not_null
 
-  - name: empresas0
-    description: "Tabela Empresas (Parte 0)"
+  - name: stg_rf__empresas0
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: empresas1
-    description: "Tabela Empresas (Parte 1)"
+  - name: stg_rf__empresas1
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: empresas2
-    description: "Tabela Empresas (Parte 2)"
-
-  - name: empresas3
-    description: "Tabela Empresas (Parte 3)"
-
-  - name: empresas4
-    description: "Tabela Empresas (Parte 4)"
-
-  - name: empresas5
-    description: "Tabela Empresas (Parte 5)"
-
-  - name: empresas6
-    description: "Tabela Empresas (Parte 6)"
-
-  - name: empresas7
-    description: "Tabela Empresas (Parte 7)"
-
-  - name: empresas8
-    description: "Tabela Empresas (Parte 8)"
-
-  - name: empresas9
-    description: "Tabela Empresas (Parte 9)"
-
-  - name: estabelecimentos0
-    description: "Tabela Estabelecimentos (Parte 0)"
+  - name: stg_rf__empresas2
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: estabelecimentos1
-    description: "Tabela Estabelecimentos (Parte 1)"
+  - name: stg_rf__empresas3
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: estabelecimentos2
-    description: "Tabela Estabelecimentos (Parte 2)"
-
-  - name: estabelecimentos3
-    description: "Tabela Estabelecimentos (Parte 3)"
-
-  - name: estabelecimentos4
-    description: "Tabela Estabelecimentos (Parte 4)"
-
-  - name: estabelecimentos5
-    description: "Tabela Estabelecimentos (Parte 5)"
-
-  - name: estabelecimentos6
-    description: "Tabela Estabelecimentos (Parte 6)"
-
-  - name: estabelecimentos7
-    description: "Tabela Estabelecimentos (Parte 7)"
-
-  - name: estabelecimentos8
-    description: "Tabela Estabelecimentos (Parte 8)"
-
-  - name: estabelecimentos9
-    description: "Tabela Estabelecimentos (Parte 9)"
-
-  - name: simples
-    description: "Tabela do Simples Nacional"
+  - name: stg_rf__empresas4
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: socios0
-    description: "Tabela Sócios (Parte 0)"
+  - name: stg_rf__empresas5
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: socios1
-    description: "Tabela Sócios (Parte 1)"
+  - name: stg_rf__empresas6
     columns:
-      - name: coluna1
-        description: "Descrição da coluna1"
-      - name: coluna2
-        description: "Descrição da coluna2"
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: socios2
-    description: "Tabela Sócios (Parte 2)"
+  - name: stg_rf__empresas7
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: socios3
-    description: "Tabela Sócios (Parte 3)"
+  - name: stg_rf__empresas8
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: socios4
-    description: "Tabela Sócios (Parte 4)"
+  - name: stg_rf__empresas9
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - unique
+          - not_null
 
-  - name: socios5
-    description: "Tabela Sócios (Parte 5)"
+  - name: stg_rf__estabelecimentos0
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
 
-  - name: socios6
-    description: "Tabela Sócios (Parte 6)"
+  - name: stg_rf__estabelecimentos1
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
 
-  - name: socios7
-    description: "Tabela Sócios (Parte 7)"
+  - name: stg_rf__estabelecimentos2
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
 
-  - name: socios8
-    description: "Tabela Sócios (Parte 8)"
+  - name: stg_rf__estabelecimentos3
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
 
-  - name: socios9
-    description: "Tabela Sócios (Parte 9)"
+  - name: stg_rf__estabelecimentos4
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__estabelecimentos5
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__estabelecimentos6
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__estabelecimentos7
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__estabelecimentos8
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__estabelecimentos9
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__simples
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios0
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios1
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios2
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios3
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios4
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios5
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios6
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios7
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios8
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null
+
+  - name: stg_rf__socios9
+    columns:
+      - name: cnpj_basico
+        data_tests:
+          - not_null

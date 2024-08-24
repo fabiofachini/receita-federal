@@ -1,16 +1,31 @@
--- models/staging/stg_bacen__carteira_de_credito_pf.sql
+-- models/staging/
 
-with carteira_de_credito_pf as (
-    select * from {{ source('dbo', 'carteira_de_credito_pf') }}
+with socios as (
+    select * 
+    from {{ source('main', 'src_socios6') }}
 ),
 
--- transformação dos dados
-stg_bacen__carteira_de_credito_pf as (
+-- Transformação dos dados
+stg_rf__socios6 as (
     select
-        CONVERT(DATE, data, 103) AS Data,
-        cast(valor as int) as Carteira_de_Credito_PF
-    from carteira_de_credito_pf
+        cast("0" as varchar(8)) as cnpj_basico,
+        cast("1" as integer) as identificador_socio,
+        cast("2" as varchar(100)) as nome_socio,
+        cast("3" as varchar(14)) as cpf_cnpj_socio,
+        cast("4" as integer) as qualificacao_socio,
+        case 
+            when length("5") = 8 and regexp_replace("5", '\D', '') = "5" then 
+                cast(substr("5", 1, 4) || '-' || substr("5", 5, 2) || '-' || substr("5", 7, 2) as date)
+            else 
+                NULL
+        end as data_entrada_sociedade,
+        cast("6" as integer) as pais,
+        cast("7" as varchar(14)) as representante_legal_cpf,
+        cast("8" as varchar(100)) as representante_legal_nome,
+        cast("9" as integer) as representante_legal_qualificacao,
+        cast("10" as integer) as faixa_etaria
+    from socios
 )
 
--- retorno dos dados transformados
-select * from stg_bacen__carteira_de_credito_pf
+-- Retorno dos dados transformados
+select * from stg_rf__socios6

@@ -1,16 +1,17 @@
--- models/staging/stg_bacen__carteira_de_credito_pf.sql
+-- models/staging/
 
-with carteira_de_credito_pf as (
-    select * from {{ source('dbo', 'carteira_de_credito_pf') }}
+with paises as (
+    select * 
+    from {{ source('main', 'src_paises') }}
 ),
 
--- transformação dos dados
-stg_bacen__carteira_de_credito_pf as (
+-- Transformação dos dados
+stg_rf__paises as (
     select
-        CONVERT(DATE, data, 103) AS Data,
-        cast(valor as int) as Carteira_de_Credito_PF
-    from carteira_de_credito_pf
+        cast("0" as int) as paises_codigo,
+        cast("1" as varchar(200)) as paises_descricao
+    from paises
 )
 
--- retorno dos dados transformados
-select * from stg_bacen__carteira_de_credito_pf
+-- Retorno dos dados transformados
+select * from stg_rf__paises
