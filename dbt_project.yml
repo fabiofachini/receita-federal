@@ -32,3 +32,12 @@ log-path: "logs"
 
 # Especifica a versão mínima do dbt-core necessária para rodar este projeto
 require-dbt-version: [">=1.0.0"]
+
+models:
+  receita_federal:
+    staging:
+      +materialized: view  # Define 'view' como padrão para a etapa 'staging'
+    intermediate:
+      +materialized: view  # Define 'view' como padrão para a etapa 'intermediate'
+    marts:
+      +materialized: table  # Define 'table' como padrão para a etapa 'marts'
