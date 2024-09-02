@@ -17,7 +17,7 @@ outros_arquivos = ['Cnaes.zip', 'Motivos.zip', 'Municipios.zip', 'Naturezas.zip'
 
 # Função para ler e carregar dados no banco de dados
 def processar_arquivo(nome_arquivo, nome_tabela):
-    print(f'Iniciando ajustes no arquivo {nome_arquivo}.')
+    print(f'Iniciando carregamento do arquivo {nome_arquivo}.')
     caminho_arquivo = os.path.join(diretorio, nome_arquivo)
     dados = pd.read_csv(caminho_arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
     nome_tabela_com_prefixo = f'src_{nome_tabela}'

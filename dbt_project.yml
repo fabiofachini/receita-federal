@@ -1,5 +1,3 @@
-# dbt_project.yml
-
 name: 'receita_federal'
 version: '1.0'
 config-version: 2
@@ -7,37 +5,10 @@ config-version: 2
 profile: receita-federal
 
 # Diretório onde os modelos (SQL) serão salvos
-model-paths: ["models/staging", "models/intermediate", "models/marts"]
-
-# Diretório para armazenar arquivos de análise
-analysis-paths: ["analysis"]
-
-# Diretório onde as macros (definições de função) serão salvas
-macro-paths: ["macros"]
-
-# Diretório onde os dados seeds (dados brutos) serão salvos
-seed-paths: ["seeds"]
-
-# Diretório onde os snapshots (instantâneos de dados) serão salvos
-snapshot-paths: ["snapshots"]
-
-# Diretório onde os testes serão salvos
-test-paths: ["tests"]
-
-# Diretório onde os schemas (esquemas de banco de dados) serão salvos
-target-path: "target"
-
-# Diretório onde os arquivos de log serão salvos
-log-path: "logs"
-
-# Especifica a versão mínima do dbt-core necessária para rodar este projeto
-require-dbt-version: [">=1.0.0"]
+model-paths: ["models"]
 
 models:
   receita_federal:
-    staging:
-      +materialized: view  # Define 'view' como padrão para a etapa 'staging'
-    intermediate:
-      +materialized: view  # Define 'view' como padrão para a etapa 'intermediate'
+    +materialized: view  # Configuração padrão
     marts:
-      +materialized: table  # Define 'table' como padrão para a etapa 'marts'
+      +materialized: table  # Configuração específica para a pasta marts

@@ -1,21 +1,9 @@
 version: 2
 
 models:
-  - name: int_empresas_combined
+  - name: mart_estabelecimentos_completo
     columns:
-      - name: cnpj_basico
+      - name: cnpj
         data_tests:
           - unique
-          - not_null
-
-  - name: int_estabelecimentos_combined
-    columns:
-      - name: cnpj_basico
-        data_tests:
-          - not_null
-
-  - name: int_socios_combined
-    columns:
-      - name: cnpj_basico
-        data_tests:
           - not_null

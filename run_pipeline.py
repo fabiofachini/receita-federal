@@ -6,23 +6,26 @@ import time
 # Função para executar scripts Python
 def executar_scripts():
     try:
-        # Caminho para os arquivos api_ibge.py e api_bacen.py na pasta source
+        # Caminho para os arquivos
         source = os.path.join(os.getcwd())
 
-        # Executa api_ibge.py
+        # Executa extração
         print("Baixando CSVs da Receita Federal")
-        download_csv = os.path.join(source, 'download.py')
-        subprocess.run(['python3', download_csv])
+        download = os.path.join(source, 'download.py')
+        subprocess.run(['python3', download])
 
-        # Executa api_bacen.py
-        print("Importando no Banco de Dados")
-        import_db = os.path.join(source, 'import_db.py')
-        subprocess.run(['python3', import_db])
+        # Executa carregamento
+        print("Importando no Banco de Dados DuckDB")
+        import_data = os.path.join(source, 'import_data.py')
+        subprocess.run(['python3', import_data])
 
-        # Executa dbt run
-        print("Executando dbt run")
+        # Executa transformação
+        print("Executando DBT")
         subprocess.run(['dbt', 'run'])
         subprocess.run(['dbt', 'test'])
+
+        # Executa transferência para nuvem
+        print("Transferindo para nuvem")
 
     except subprocess.CalledProcessError as e:
         print(f"Erro ao executar o script: {e}")
@@ -41,5 +44,5 @@ if __name__ == "__main__":
     # Calcula o tempo total de execução
     elapsed_time = end_time - start_time
 
-    print("Extração, carregamento e transformação dos dados do BACEN e do IBGE finalizados.")
+    print("Extração, carregamento, transformação e transferência dos dados finalizados.")
     print(f"Tempo total de execução: {elapsed_time:.2f} segundos")
