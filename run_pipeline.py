@@ -26,6 +26,8 @@ def executar_scripts():
 
         # Executa transferência para nuvem
         print("Transferindo para nuvem")
+        transfer = os.path.join(source, 'transfer.py')
+        subprocess.run(['python3', transfer])
 
     except subprocess.CalledProcessError as e:
         print(f"Erro ao executar o script: {e}")
