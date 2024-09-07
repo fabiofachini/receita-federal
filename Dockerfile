@@ -21,22 +21,14 @@ COPY . /app
 # Atualiza o pip
 RUN pip install --upgrade pip
 
+# Instala as dependências do projeto a partir do arquivo requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
 # Limpa o cache do pip
 RUN pip cache purge
-
-# Instala as dependências do projeto
-RUN pip install --no-cache-dir \
-    requests \
-    pandas \
-    python-dotenv \
-    sqlalchemy \
-    pyodbc \
-    dbt-core \
-    dbt-sqlserver \
-    selenium
 
 # Define a variável de ambiente para o profiles.yml
 ENV DBT_PROFILES_DIR=/app
 
 # Comando padrão a ser executado quando o contêiner for iniciado
-CMD ["python3", "/app/executor.py"]
+CMD ["python3", "/app/run_pipeline.py"]

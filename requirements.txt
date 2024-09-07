@@ -1,0 +1,9 @@
+dbt-core==1.8.5
+dbt-duckdb==1.8.2
+duckdb==1.0.0
+pyodbc==5.1.0
+python-dotenv==1.0.1
+requests==2.32.3
+SQLAlchemy==2.0.34
+pandas==2.0.3
+numpy==1.24.4
