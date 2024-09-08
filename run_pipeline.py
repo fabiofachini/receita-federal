@@ -44,7 +44,7 @@ if __name__ == "__main__":
     end_time = time.time()
 
     # Calcula o tempo total de execução
-    elapsed_time = end_time - start_time
+    elapsed_time = (end_time - start_time) / 60
 
     print("Extração, carregamento, transformação e transferência dos dados finalizados.")
-    print(f"Tempo total de execução: {elapsed_time:.2f} segundos")
+    print(f"Tempo total de execução: {elapsed_time:.2f} minutos")

@@ -20,7 +20,8 @@ driver = os.getenv("DB_DRIVER")
 
 connection_string = f"DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password}"
 conn = pyodbc.connect(connection_string)
-engine = create_engine(f'mssql+pyodbc:///?odbc_connect={connection_string}')
+engine = create_engine(f'mssql+pyodbc:///?odbc_connect={connection_string}', 
+                       connect_args={'fast_executemany': True})
 
 # Função para transferir os dados em lotes e substituir a tabela
 def transfer_marts_to_azure_sql_in_chunks(tables, chunk_size=10000):
