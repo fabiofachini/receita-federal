@@ -5,8 +5,8 @@ import duckdb
 # Corrigir erros dos arquivos e o encoding
 print('Iniciando ajustes dos arquivos para importação no banco de dados')
 
-#diretorio = '/media/fabio/SSD 2/Programação/RF'
-diretorio = os.path.join(os.getcwd(), 'source')
+diretorio = '/media/fabio/SSD 2/Programação/RF'
+#diretorio = os.path.join(os.getcwd(), 'source')
 con = duckdb.connect('dados.duckdb')
 
 # Definir os nomes dos arquivos e das tabelas

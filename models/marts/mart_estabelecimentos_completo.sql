@@ -10,7 +10,7 @@ select
         else 'nao informado'
     end as matriz_filial,
     case
-        when simples.opcao_mei = 's' then 'mei'
+        when simples.opcao_mei = 'S' then 'mei'
         when empresas.porte = '00' then 'nao informado'
         when empresas.porte = '01' then 'micro empresa'
         when empresas.porte = '03' then 'empresa de pequeno porte'
