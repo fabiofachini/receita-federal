@@ -5,8 +5,8 @@ import time
 from datetime import datetime, timedelta
 
 # Definir o diretório base como o diretório atual do projeto
-#diretorio_base = '/media/fabio/SSD 2/Programação/RF'
-diretorio_base = os.path.join(os.getcwd(), 'source')
+diretorio_base = '/media/fabio/SSD 2/RF'
+#diretorio_base = os.path.join(os.getcwd(), 'source')
 
 # Criar a pasta 'source' se não existirS
 os.makedirs(diretorio_base, exist_ok=True)

@@ -9,7 +9,7 @@ import os
 load_dotenv()
 
 # Conexão com o DuckDB
-duckdb_conn = duckdb.connect('dados.duckdb')
+duckdb_conn = duckdb.connect('receita-federal.duckdb')
 
 # Configurar a string de conexão com o Azure SQL Database usando pyodbc
 server = os.getenv("DB_SERVER")
@@ -47,7 +47,7 @@ def transfer_marts_to_azure_sql_in_chunks(tables, chunk_size=10000):
             df = duckdb_conn.execute(query).fetchdf()
 
             # Para o primeiro chunk, cria a tabela. Para os demais, faz append
-            df.to_sql(table, con=engine, if_exists='replace' if first_chunk else 'append', index=False)
+            df.to_sql(table, con=engine, if_exists='replace' if first_chunk else 'append', index=False, schema='receitafederal')
             first_chunk = False
 
             # Calculando e exibindo o progresso

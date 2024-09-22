@@ -3,5 +3,5 @@ receita-federal:
   outputs:
     dev:
       type: duckdb
-      path: './dados.duckdb'
+      path: './receita-federal.duckdb'
       extensions: []  # Use para carregar extensões adicionais se necessário
