@@ -24,7 +24,7 @@ engine = create_engine(f'mssql+pyodbc:///?odbc_connect={connection_string}',
                        connect_args={'fast_executemany': True})
 
 # Função para transferir os dados em lotes e substituir a tabela
-def transfer_marts_to_azure_sql_in_chunks(tables, chunk_size=50000):
+def transfer_marts_to_azure_sql_in_chunks(tables, chunk_size=1000):
 
     for table in tables:
         print(f"Iniciando transferência da tabela {table}.")
