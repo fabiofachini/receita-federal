@@ -27,7 +27,7 @@ select
     estabelecimentos.logradouro_numero as numero,
     estabelecimentos.logradouro_tipo || ' ' || estabelecimentos.logradouro || ', ' || estabelecimentos.logradouro_numero 
     || ', ' ||  estabelecimentos.bairro || ', ' || municipio.municipios_descricao
-    || ', ' || estabelecimentos.uf || ', ' || 'BRASIL'|| ', ' ||"CEP"|| ' ' ||estabelecimentos.cep as endereco,
+    || ', ' || estabelecimentos.uf || ', ' || 'BRASIL'|| ', ' ||'CEP '|| estabelecimentos.cep as endereco,
     estabelecimentos.cnae_principal as cod_cnae,
     upper(cnae.cnaes_descricao) as cnae_principal,
     case
