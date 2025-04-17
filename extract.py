@@ -5,8 +5,7 @@ import time
 from datetime import datetime, timedelta
 
 # Definir o diretório base como o diretório atual do projeto
-diretorio_base = '/media/fabio/SSD 2/RF'
-#diretorio_base = os.path.join(os.getcwd(), 'source')
+diretorio_base = os.path.join(os.getcwd(), 'source')
 
 # Criar a pasta 'source' se não existirS
 os.makedirs(diretorio_base, exist_ok=True)
@@ -60,7 +59,7 @@ def obter_url_base():
     # Tentar até encontrar o mês com dados disponíveis
     while True:
         mes_ano = data_atual.strftime('%Y-%m')
-        url_base = f"http://200.152.38.155/CNPJ/dados_abertos_cnpj/{mes_ano}/"
+        url_base = f"https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/{mes_ano}/"
         
         # Tentar verificar se a URL está acessível
         try:
