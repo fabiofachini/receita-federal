@@ -80,5 +80,5 @@ on estabelecimentos.cnae_principal = cnae.cnaes_codigo
 left join {{ ref('stg_rf__municipios') }} as municipio
 on estabelecimentos.municipio = municipio.municipios_codigo
 
-where estabelecimentos.situacao_cadastral != '02' and estabelecimentos.uf = 'SC'
-and simples.opcao_mei != 'S'
+where estabelecimentos.situacao_cadastral = '02'
+  AND simples.opcao_mei =! 'S'
