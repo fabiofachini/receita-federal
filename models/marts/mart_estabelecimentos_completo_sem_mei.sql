@@ -81,4 +81,4 @@ left join {{ ref('stg_rf__municipios') }} as municipio
 on estabelecimentos.municipio = municipio.municipios_codigo
 
 where estabelecimentos.situacao_cadastral = '02'
-  AND simples.opcao_mei =! 'S'
+  AND simples.opcao_mei != 'S'

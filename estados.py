@@ -13,7 +13,10 @@ estados = ['EX', 'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT
 MAX_LINHAS = 800_000
 
 # Pasta de saída
-pasta_saida = './'  # ou outro caminho, se quiser
+pasta_saida = './estados/'  # pasta estados na raiz do projeto
+
+# Cria a pasta estados se não existir
+os.makedirs(pasta_saida, exist_ok=True)
 
 # Exporta um ou mais CSVs por estado
 for estado in estados:

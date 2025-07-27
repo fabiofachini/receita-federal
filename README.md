@@ -1,8 +1,20 @@
-# Receita Federal - Consulta de Dados de Empresas do Brasil
+# Receita Federal - Base de Dados de Empresas Brasileiras
 
-Este repositório contém scripts e instruções para consultar, extrair, carregar e transformar (ELT) os dados das empresas do Brasil, disponibilizados pela Receita Federal através do site Dados Abertos Receita Federal. O processo envolve a extração automática dos dados mais recentes, a carga para um banco de dados local (DuckDB) e a construção dos modelos de consulta.
+[![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![DuckDB](https://img.shields.io/badge/DuckDB-0.8.1-orange.svg)](https://duckdb.org/)
 
-## Exemplos de Dados Disponíveis
+## 📋 Visão Geral
+
+Este projeto oferece uma solução completa para gerenciar e analisar dados de empresas brasileiras disponibilizados pela Receita Federal através do portal de Dados Abertos. A solução implementa um pipeline ELT (Extração, Carga e Transformação) moderno e eficiente, utilizando DuckDB como banco de dados local de alta performance.
+
+### 🎯 Principais Benefícios
+
+- **Processo Automatizado**: Pipeline completo executado com um único comando
+- **Alta Performance**: Utilização de DuckDB para processamento eficiente de grandes volumes de dados
+- **Baixo Consumo de Recursos**: Processamento otimizado que funciona em máquinas convencionais
+- **Dados Organizados**: Estruturação clara dos dados para análises e consultas
+
+## 📊 Dados Disponíveis
 - **CNPJ**
 - **Razão Social**
 - **Capital Social**
@@ -14,27 +26,213 @@ Este repositório contém scripts e instruções para consultar, extrair, carreg
 - **Telefone**
 - **E-mail**
 
-### Principais Documentos
+## 🛠️ Arquitetura do Projeto
 
-- `extract.py`: Responsável por identificar e baixar o arquivo mais recente com os dados de empresas da Receita Federal. Utiliza as bibliotecas `requests` e `concurrent` para baixar os dados em paralelo, acelerando o processo.
-  
-- `load.py`: Cria um banco de dados local utilizando **DuckDB** e carrega todos os arquivos baixados para este banco.
+O projeto é organizado em módulos independentes que trabalham em conjunto:
 
-- `dbt`: Ferramenta para transformação dos dados para organizar e preparar os modelos para análise.
+### Pipeline Principal (Automático)
 
-- `run_pipeline_local.py`: Executa todo o pipeline de forma automatizada.
+1. **`run_pipeline.py`**
+   - Script principal que orquestra todo o processo
+   - Executa automaticamente as etapas de extração, carga e transformação
+   - Única ferramenta que você precisa executar para ter o ambiente funcionando
 
-## Requisitos de Software
+2. **`extract.py`**
+   - Responsável pela extração dos dados da Receita Federal
+   - Utiliza download paralelo para otimizar o tempo de download
+   - Gerencia automaticamente as atualizações dos dados
 
-- **Python**
-- **DuckDB** (banco de dados local)
-- **Espaço em disco** 30GB
-- **Memória** 8GB
+3. **`load.py`**
+   - Configura e popula o banco de dados DuckDB
+   - Processa os arquivos baixados e estrutura os dados
+   - Otimiza o armazenamento para consultas eficientes
 
-## Como Usar
+4. **`dbt/`**
+   - Modelos de transformação de dados
+   - Cria visões otimizadas para análise
+   - Implementa regras de negócio e agregações
 
-1. **Instalar Dependências**: Certifique-se de ter o Python 3 instalado e instale as dependências listadas no arquivo `requirements.txt`:
+### Ferramentas Auxiliares
+
+5. **`estados.py`**
+   - Ferramenta para análise regionalizada
+   - Divide a base de empresas por estado
+   - Gera arquivos CSV separados na pasta `estados/`
+   - Exclui MEIs para análises específicas
+   - Deve ser executado após o pipeline principal
+
+## 💻 Requisitos do Sistema
+
+### Hardware Recomendado
+- **Processador**: 2 cores ou mais
+- **Memória RAM**: 8GB (mínimo)
+- **Armazenamento**: 30GB de espaço livre
+- **Internet**: Conexão estável para download dos dados
+
+### Software Necessário
+- **Sistema Operacional**: Ubuntu 22.04 ou 24.04
+- **Python**: Versão 3.8 ou superior
+- **DuckDB**: Instalado automaticamente com as dependências
+
+## 📊 Estrutura dos Modelos DBT
+
+O projeto utiliza uma arquitetura em camadas para organizar os dados:
+
+### 1. Source
+- Camada que reflete as tabelas brutas carregadas no DuckDB
+- Localizada em `models/source/`
+- Não deve ser usada para consultas diretas
+- Exemplo: `source_empresas`, `source_socios`, `source_estabelecimentos`
+
+### 2. Staging
+- Primeira camada de transformação
+- Limpeza inicial e padronização de dados
+- Localizada em `models/staging/`
+- Nomenclatura: `stg_*`
+- Exemplo: `stg_empresas` (dados limpos e padronizados)
+
+### 3. Intermediate
+- Camada intermediária com transformações complexas
+- Combina dados de diferentes fontes staging
+- Localizada em `models/intermediate/`
+- Nomenclatura: `int_*`
+- Exemplo: `int_empresas_socios` (relacionamento entre empresas e sócios)
+
+### 4. Marts
+- Camada final otimizada para consultas
+- Modelos prontos para análise de negócio
+- Localizada em `models/marts/`
+- Dividida por área de negócio
+
+#### Marts Disponíveis:
+
+1. **`mart_estabelecimentos_completo`**
+   - Visão completa de todos os estabelecimentos
+   - Inclui dados de endereço, contato e situação cadastral
+   - Contém todos os tipos de empresas, incluindo MEIs
+   - Ideal para análises detalhadas e cruzamentos de dados
+
+2. **`mart_estabelecimentos_completo_sem_mei`**
+   - Similar ao mart_estabelecimentos_completo
+   - Exclui Microempreendedores Individuais (MEIs)
+   - Útil para análises focadas em empresas de maior porte
+   - Base para geração dos arquivos por estado
+
+3. **`mart_estabelecimentos_setores_count`**
+   - Contagem de estabelecimentos ativos por setor econômico
+   - Setores: agricultura, indústria, construção, comércio, serviços
+   - Baseado no CNAE principal
+   - Ideal para análises macroeconômicas
+
+4. **`mart_estabelecimentos_cidade_count`**
+   - Distribuição de estabelecimentos por cidade
+   - Inclui contagem total por município
+   - Permite análises de concentração geográfica
+   - Útil para estudos de desenvolvimento regional
+
+5. **`mart_estabelecimentos_count`**
+   - Contagem geral de estabelecimentos
+   - Visão agregada do número total de empresas
+   - Pode ser usado para acompanhamento de crescimento
+   - Métrica base para outros indicadores
+
+### Exemplos de Consultas
+
+```sql
+-- Contagem de estabelecimentos ativos por setor
+SELECT * FROM mart_estabelecimentos_setores_count;
+
+-- Top 10 cidades com mais estabelecimentos
+SELECT * FROM mart_estabelecimentos_cidade_count 
+ORDER BY total_estabelecimentos DESC LIMIT 10;
+
+-- Estabelecimentos completos de uma cidade específica
+SELECT * FROM mart_estabelecimentos_completo
+WHERE municipio = 'SAO PAULO';
+```
+
+### Visualização do Modelo de Dados
+
+Para visualizar o fluxograma dos modelos e suas dependências:
+```bash
+dbt docs generate
+dbt docs serve
+```
+Acesse http://localhost:8080 para ver a documentação completa e o lineage graph.
+
+## 🔍 Acessando os Dados
+
+### Opção 1: DBeaver (Recomendado para Análises)
+1. Instale o DBeaver Community:
    ```bash
-   pip install -r requirements.txt
+   sudo apt update
+   sudo apt install dbeaver-ce
+   ```
+2. Abra o DBeaver e adicione uma nova conexão
+3. Escolha DuckDB como driver
+4. Selecione o arquivo `receita-federal.duckdb`
 
-2. **Executar o Projeto**:O fluxo de trabalho segue um pipeline ELT (Extract, Load, Transform), automatizado e executado pelo script principal `run_pipeline_local.py`.
+### Opção 2: CLI DuckDB
+1. Instale o DuckDB CLI:
+   ```bash
+   sudo apt install duckdb
+   ```
+2. Acesse o banco:
+   ```bash
+   duckdb receita-federal.duckdb
+   ```
+3. Execute consultas SQL diretamente:
+   ```sql
+   SELECT * FROM mart_empresas_ativas LIMIT 5;
+   ```
+
+## 🚀 Guia de Instalação
+
+1. **Clone o Repositório**
+   ```bash
+   git clone https://github.com/fabiofachini/receita-federal.git
+   cd receita-federal
+   ```
+
+2. **Configure o Ambiente**
+   ```bash
+   # Crie um ambiente virtual (recomendado)
+   python -m venv venv
+   
+   # Ative o ambiente virtual
+   # Windows:
+   venv\Scripts\activate
+   # Linux/macOS:
+   source venv/bin/activate
+   
+   # Instale as dependências
+   pip install -r requirements.txt
+   ```
+
+## 📦 Executando o Projeto
+
+1. **Pipeline Principal**
+   ```bash
+   python run_pipeline.py
+   ```
+   Este comando executará todo o processo automaticamente. O tempo de execução pode variar dependendo da sua conexão e do hardware disponível.
+
+2. **Análise por Estados** (Opcional)
+   ```bash
+   python estados.py
+   ```
+   Execute este comando após o pipeline principal para gerar arquivos CSV separados por estado na pasta `estados/`.
+
+## 📊 Estrutura dos Dados
+
+Após a execução, você terá acesso a:
+- Base de dados completa no arquivo `receita-federal.duckdb`
+- Arquivos CSV por estado na pasta `estados/` (se executar o script opcional)
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Por favor, sinta-se à vontade para abrir issues ou enviar pull requests com melhorias.
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
