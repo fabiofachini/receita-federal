@@ -9,10 +9,10 @@ def executar_scripts():
         # Caminho para os arquivos
         source = os.path.join(os.getcwd())
 
-        # Executa extração [QUEBRADO]
-        # print("Baixando CSVs da Receita Federal")
-        # extract = os.path.join(source, 'extract.py')
-        # subprocess.run(['python3', extract])
+        # Executa extração
+        print("Baixando CSVs da Receita Federal")
+        extract = os.path.join(source, 'extract.py')
+        subprocess.run(['python3', extract])
 
         # Executa carregamento
         print("Importando no Banco de Dados DuckDB")
