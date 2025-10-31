@@ -1,14 +1,31 @@
 # models/marts/mart__exportar_para_hf.py
 import os
+from pathlib import Path
 from huggingface_hub import HfApi
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv, dotenv_values
 
 def model(dbt, session):
     dbt.config(materialized="table")
+    _ = dbt.ref("mart_exportar_estabelecimentos")
+
+    # --- Descoberta e carregamento do .env (Opção A) ---
+    dotenv_file = find_dotenv(filename=".env", usecwd=True)
+    if dotenv_file:
+        load_dotenv(dotenv_file, override=True)
+    else:
+        # Carrega variáveis do ambiente mesmo sem .env (ex.: CI)
+        load_dotenv(override=True)
+
+    # Logs de debug úteis
+    try:
+        print(f"[debug] .env: {dotenv_file or 'não encontrado'}")
+        print(f"[debug] CWD: {os.getcwd()}")
+        print(f"[debug] __file__: {__file__}")
+    except Exception:
+        # Em alguns ambientes __file__ pode não estar disponível
+        pass
 
     # --- Configurações ---
-    load_dotenv()
-
     repo_id = "fabiofachini/receitafederal"  # nome do dataset no Hugging Face
     out_dir = "data"
     parquet_name = "dados_estabelecimentos_brasil.parquet"
@@ -23,9 +40,17 @@ def model(dbt, session):
         )
 
     # --- Token do Hugging Face ---
-    hf_token = os.getenv("HF_TOKEN")
+    hf_token = (
+        os.getenv("HF_TOKEN")
+    )
+    # Fallback: ler diretamente o arquivo .env encontrado
+    if not hf_token and dotenv_file:
+        hf_token = dotenv_values(dotenv_file).get("HF_TOKEN")
+
     if not hf_token:
-        raise ValueError("HF_TOKEN não encontrado. Configure no .env ou no ambiente.")
+        raise ValueError(
+            "HF_TOKEN não encontrado. Configure no .env (sem aspas) ou no ambiente."
+        )
 
     print(f"[info] Enviando arquivo {parquet_path} para o Hugging Face Hub...")
 

@@ -3,13 +3,15 @@ import os
 
 def model(dbt, session):
     dbt.config(materialized="table")
+    _ = dbt.ref("mart_estabelecimentos_completo_sem_mei")
 
     out_dir = "data"
     os.makedirs(out_dir, exist_ok=True)
     parquet_path = os.path.join(out_dir, "dados_estabelecimentos_brasil.parquet")
     parquet_abs = os.path.abspath(parquet_path)
 
-    qualified = 'main.mart_estabelecimentos_completo_sem_mei'
+    schema = dbt.this.schema or session.execute("select current_schema()").fetchone()[0]
+    source_relation = f"{schema}.mart_estabelecimentos_completo_sem_mei"
 
     # Se já existir, apaga para permitir overwrite
     if os.path.exists(parquet_abs):
@@ -20,7 +22,7 @@ def model(dbt, session):
 
     # COPY direto da tabela para Parquet (sem opções não suportadas)
     session.execute(f"""
-        COPY {qualified}
+        COPY {source_relation}
         TO '{parquet_abs}'
         (FORMAT PARQUET, COMPRESSION ZSTD);
     """)
