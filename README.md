@@ -223,6 +223,27 @@ Acesse http://localhost:8080 para ver a documentação completa e o lineage grap
    ```
    Execute este comando após o pipeline principal para gerar arquivos CSV separados por estado na pasta `estados/`.
 
+## ⚙️ Configurações do Extract
+
+O `extract.py` usa o compartilhamento público da Receita via WebDAV e descobre automaticamente o mês mais recente completo.
+As variáveis podem ser definidas no ambiente ou em arquivo `.env` (carregado automaticamente).
+
+- `RF_SHARE_URL` (obrigatória): URL pública do compartilhamento (com token).
+- `HF_TOKEN` (obrigatória para upload no Hugging Face): token usado pelo modelo `mart_exportar_para_hf.py` para publicar o parquet no dataset. Se o dataset for privado, a aplicação também precisará dele para download.
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`, `SMTP_TO` (opcionais): envio de alerta por e-mail quando o extract falhar.
+
+Exemplo de `.env`:
+```env
+RF_SHARE_URL=https://arquivos.receitafederal.gov.br/index.php/s/SEU_TOKEN_AQUI
+HF_TOKEN=hf_seu_token_aqui
+SMTP_HOST=smtp.seudominio.com
+SMTP_PORT=587
+SMTP_USER=usuario@seudominio.com
+SMTP_PASSWORD=senha
+SMTP_FROM=alertas@seudominio.com
+SMTP_TO=dev1@seudominio.com,dev2@seudominio.com
+```
+
 ## 📊 Estrutura dos Dados
 
 Após a execução, você terá acesso a:
