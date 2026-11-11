@@ -13,12 +13,12 @@ def executar_scripts():
         # Executa extração
         print("Baixando CSVs da Receita Federal")
         extract = os.path.join(source, 'extract.py')
-        subprocess.run(['python3', extract], check=True)
+        subprocess.run([sys.executable, extract], check=True)
 
         # Executa carregamento
         print("Importando no Banco de Dados DuckDB")
         load = os.path.join(source, 'load.py')
-        subprocess.run(['python3', load], check=True)
+        subprocess.run([sys.executable, load], check=True)
 
         # Executa transformação
         print("Executando DBT")

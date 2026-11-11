@@ -48,9 +48,10 @@ def model(dbt, session):
         hf_token = dotenv_values(dotenv_file).get("HF_TOKEN")
 
     if not hf_token:
-        raise ValueError(
-            "HF_TOKEN não encontrado. Configure no .env (sem aspas) ou no ambiente."
+        print(
+            "[info] HF_TOKEN não configurado. Pulando upload para o Hugging Face (execução local)."
         )
+        return session.sql("SELECT 1 AS ok")
 
     print(f"[info] Enviando arquivo {parquet_path} para o Hugging Face Hub...")
 

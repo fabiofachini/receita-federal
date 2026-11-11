@@ -18,9 +18,23 @@ outros_arquivos = ['Cnaes.zip', 'Motivos.zip', 'Municipios.zip', 'Naturezas.zip'
 def processar_arquivo(nome_arquivo, nome_tabela):
     print(f'Iniciando carregamento do arquivo {nome_arquivo}.')
     caminho_arquivo = os.path.join(diretorio, nome_arquivo)
-    dados = pd.read_csv(caminho_arquivo, sep=';', compression='zip', encoding='latin1', header=None, dtype=str)
     nome_tabela_com_prefixo = f'src_{nome_tabela}'
-    con.execute(f'CREATE OR REPLACE TABLE {nome_tabela_com_prefixo} AS SELECT * FROM dados')
+    primeiro = True
+    for chunk in pd.read_csv(
+        caminho_arquivo,
+        sep=';',
+        compression='zip',
+        encoding='latin1',
+        header=None,
+        dtype=str,
+        chunksize=500000,
+    ):
+        if primeiro:
+            con.execute(f'CREATE OR REPLACE TABLE {nome_tabela_com_prefixo} AS SELECT * FROM chunk')
+            primeiro = False
+        else:
+            con.execute(f'INSERT INTO {nome_tabela_com_prefixo} SELECT * FROM chunk')
+    print(f'Tabela {nome_tabela_com_prefixo} concluída.')
 
 # Processar arquivos de estabelecimentos
 for i, arquivo in enumerate(arquivos_estabelecimentos):
@@ -39,4 +53,5 @@ tabelas = ['cnaes', 'motivos', 'municipios', 'naturezas', 'paises', 'qualificaco
 for arquivo, tabela in zip(outros_arquivos, tabelas):
     processar_arquivo(arquivo, tabela)
 
+con.close()
 print('Processamento concluído.')
